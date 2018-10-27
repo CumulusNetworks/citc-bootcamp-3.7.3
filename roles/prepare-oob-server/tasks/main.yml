@@ -60,8 +60,7 @@
   changed_when: false
 
 - name: Make Sure Correct Ansible Version is Installed
-  assert:
-    that: 'ansible_vers.stdout|string != desired_ansible_version|string'
+  debug:
     msg: "This Bootcamp was built for {{desired_ansible_version}} but version {{ansible_vers.stdout}} is installed."
 
 - name: Installing Git default settings
