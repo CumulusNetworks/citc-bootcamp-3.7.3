@@ -1,0 +1,30 @@
+- name: Work on OOB-Server
+  hosts: oob-server
+  become: yes
+  vars:
+    desired_netq_release: "1.4.0"
+    desired_ansible_version: "2.5.4"
+    bootcamp_automation_branch: "v3.7.0_citc"
+  gather_facts: no
+  roles:
+  - prepare-oob-server
+
+- name: Work on the Switches
+  hosts: spine*:leaf*
+  become: yes
+  vars:
+   desired_cl_release: "3.7.0"
+  gather_facts: no
+  roles:
+  - prepare-switches
+  - switch-netq
+
+- name: Work on the Servers
+  hosts: server*
+  become: yes
+  vars:
+   desired_ubuntu_release: "16.04"
+  gather_facts: no
+  roles:
+  - prepare-servers
+  - server-netq

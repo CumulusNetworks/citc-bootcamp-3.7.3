@@ -1,0 +1,34 @@
+- name: Install Ansible Dependencies
+  apt: name={{item}} update_cache=yes
+  with_items:
+   - "python-pip"
+   - "build-essential"
+   - "sshpass"
+   - "libssh-dev"
+   - "python-dev"
+   - "libssl-dev"
+   - "libffi-dev"
+
+- name: Upgrade PIP 
+  pip:
+    name: "{{item}}"
+    extra_args: --upgrade
+  with_items:
+  - "setuptools"
+  - "pip"
+
+- name: Install Appropriate Version of Ansible
+  pip:
+    name: ansible
+    version: "{{desired_ansible_version}}"
+
+- name: Detect Ansible Version AGAIN
+  shell: 'if which ansible > /dev/null; then ansible --version | head -n1 | cut -d " " -f2; fi'
+  register: ansible_vers2
+  changed_when: false
+
+- name: Make Sure Correct Ansible Version is Installed
+  debug:
+    msg: "We should have Ansible Version {{desired_ansible_version}} installed now. Detected {{ansible_vers2.stdout}}"
+  when: "ansible_vers2 is defined and ansible_vers2.stdout is defined"
+
