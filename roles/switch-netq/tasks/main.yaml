@@ -27,4 +27,4 @@
     mode: "u=rw,o=r,g=r"
 - pause:
     seconds: 5
-- shell: /usr/bin/netq config agent restart
+- shell: /usr/bin/netq config restart agent
