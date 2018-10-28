@@ -3,7 +3,7 @@
     url:  https://apps3.cumulusnetworks.com/setup/cumulus-apps-deb.pubkey
     state: present
 - apt_repository:
-    repo: deb [arch=amd64] https://apps3.cumulusnetworks.com/repos/deb xenial netq-1.1
+    repo: deb [arch=amd64] https://apps3.cumulusnetworks.com/repos/deb xenial netq-1.4
     filename: netq
     state: present
 - apt:
@@ -26,4 +26,4 @@
     mode: "u=rw,o=r,g=r"
 - pause:
     seconds: 5
-- shell: netq config agent restart
+- shell: netq config restart agent
